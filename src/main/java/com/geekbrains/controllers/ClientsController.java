@@ -1,7 +1,7 @@
 package com.geekbrains.controllers;
 
 import com.geekbrains.entities.Client;
-import com.geekbrains.entities.WareByClient;
+import com.geekbrains.entities.ClientWareLink;
 import com.geekbrains.services.ClientService;
 import com.geekbrains.services.ClientsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +88,8 @@ public class ClientsController {
     // http://localhost:8189/app/clients/rep-form-client-ware
     @RequestMapping("/rep-form-client-ware")
     public String geClientWareList(Model model) {
-        List<WareByClient> wareByClientList = clientsOrderService.getClientsOrderList();
-        model.addAttribute("clientsOrder", wareByClientList);
+        List<ClientWareLink> clientWareLinkList = clientsOrderService.getClientsOrderList();
+        model.addAttribute("clientsOrder", clientWareLinkList);
         return "rep-form-client-ware";
     }
 }

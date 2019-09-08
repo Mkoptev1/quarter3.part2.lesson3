@@ -1,12 +1,13 @@
 package com.geekbrains.launcher;
 
 import com.geekbrains.entities.Client;
-import com.geekbrains.entities.ClientsOrder;
+import com.geekbrains.entities.ClientWareLink;
 import com.geekbrains.entities.Ware;
-import com.geekbrains.entities.WareByClient;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -36,19 +37,19 @@ public class Main {
 
         // Совершаем покупку товара клиентом
         session = factory.getCurrentSession();
-        ClientsOrder clientsOrder = new ClientsOrder();
-        clientsOrder.setClient_id (client.getClient_id());
-        clientsOrder.setWare_id(ware.getWare_id());
-        clientsOrder.setWare_cost(ware.getWare_cost());
+        ClientWareLink ClientWareLink = new ClientWareLink();
+        ClientWareLink.setClient_id (client.getClient_id());
+        ClientWareLink.setWare_id(ware.getWare_id());
+        ClientWareLink.setWare_cost(ware.getWare_cost());
         session.beginTransaction();
-        session.save(clientsOrder);
+        session.save(ClientWareLink);
         System.out.println(ware);
         session.getTransaction().commit();
 
         // Смотрим, какие товары покупал клиент
         session = factory.getCurrentSession();
         session.beginTransaction();
-        WareByClient showWareByClient = session.get(WareByClient.class, 2);
+        ClientWareLink showWareByClient = session.get(ClientWareLink.class, 2);
         System.out.println(showWareByClient);
         session.getTransaction().commit();
 
@@ -68,6 +69,36 @@ public class Main {
         session.beginTransaction();
         session.delete(wareRemove);
         System.out.println(wareRemove);
+        session.getTransaction().commit();
+
+        // Получаем список клиентов
+        session = factory.getCurrentSession();
+        session.beginTransaction();
+        List<Client> wareClient = session.createQuery("from Client").getResultList();
+        System.out.println(wareClient);
+        session.getTransaction().commit();
+
+        // Получаем список товаров
+        session = factory.getCurrentSession();
+        session.beginTransaction();
+        List<Ware> wareList = session.createQuery("from Ware").getResultList();
+        System.out.println(wareList);
+        session.getTransaction().commit();
+
+        // Получаем список товаров по клиенту
+        session = factory.getCurrentSession();
+        session.beginTransaction();
+        List<ClientWareLink> wareListByClient = session.createQuery("from ClientWareLink cwl where cwl.client_id = :client_id")
+                .setParameter("client_id", new Long(10)).getResultList();
+        System.out.println(wareListByClient);
+        session.getTransaction().commit();
+  
+        // Получаем список клиентов по товару
+        session = factory.getCurrentSession();
+        session.beginTransaction();
+        List<ClientWareLink> clientListByWare = session.createQuery("from ClientWareLink cwl where cwl.ware_id = :ware_id")
+                .setParameter("ware_id", new Long(2)).getResultList();
+        System.out.println(clientListByWare);
         session.getTransaction().commit();
 
         factory.close();

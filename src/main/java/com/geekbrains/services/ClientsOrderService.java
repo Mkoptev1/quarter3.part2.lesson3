@@ -1,6 +1,6 @@
 package com.geekbrains.services;
 
-import com.geekbrains.entities.WareByClient;
+import com.geekbrains.entities.ClientWareLink;
 import com.geekbrains.repositories.ClientsOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class ClientsOrderService {
         this.clientsOrderRepository = clientsOrderRepository;
     }
 
-    public List<WareByClient> getClientsOrderList() {
-        return clientsOrderRepository.getWareByClientList();
+    public List<ClientWareLink> getClientsOrderList() {
+        return clientsOrderRepository.getClientWareLinkList();
     }
 }

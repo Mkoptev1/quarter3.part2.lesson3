@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "client_order")
-public class WareByClient {
+public class ClientWareLink {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_order_id")
@@ -19,10 +19,6 @@ public class WareByClient {
     @Column(name = "ware_cost")
     private Long ware_cost;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", insertable=false, updatable=false)
-    private Ware ware;
-
     public Long getClient_order_id() {
         return client_order_id;
     }
@@ -31,15 +27,7 @@ public class WareByClient {
         this.client_order_id = client_order_id;
     }
 
-    public Ware getWare() {
-        return ware;
-    }
-
-    public void setWare(Ware ware) {
-        this.ware = ware;
-    }
-
-    public WareByClient() {
+    public ClientWareLink() {
     }
 
     public Long getClient_id() {
@@ -73,7 +61,6 @@ public class WareByClient {
                 ", client_id=" + client_id +
                 ", ware_id=" + ware_id +
                 ", ware_cost=" + ware_cost +
-                ", ware=" + ware +
                 '}';
     }
 }

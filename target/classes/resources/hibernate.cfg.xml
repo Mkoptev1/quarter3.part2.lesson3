@@ -15,6 +15,6 @@
 
         <mapping class="com.geekbrains.entities.Client"/>
         <mapping class="com.geekbrains.entities.Ware"/>
-        <mapping class="com.geekbrains.entities.WareByClient"/>
+        <mapping class="com.geekbrains.entities.ClientWareLink"/>
     </session-factory>
 </hibernate-configuration>
